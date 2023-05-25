@@ -32,14 +32,14 @@ class Imageclip(APIView):
                 logits_per_image, logits_per_text = model(image, text)
                 probs = logits_per_image.softmax(dim=-1).cpu().numpy()
 
-            print("Label probs:", probs)  # prints: [[0.9927937  0.00421068 0.00299572]]
+            # print("Label probs:", probs)  # prints: [[0.9927937  0.00421068 0.00299572]]
 
             formatted_probs = np.round(probs, 2)
             # print(formatted_probs)
 
             max_index = np.argmax(probs)
             target_ingredient = ingredients[max_index]
-            print(target_ingredient)
+            # print(target_ingredient)
             return Response({"name":target_ingredient})
         else:
             return Response(serializer.errors, status=400)
