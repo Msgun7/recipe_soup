@@ -91,10 +91,10 @@ def success(request):
             'vat': vat,
             'requestedAt': requestedAt,
             'orderName': orderName,
-            'user' : user_serializer.data['username'],
-            'duration' : subscribe_serializer.data['duration'],
-            'start_subscribe_at' : subscribe_serializer.data['start_subscribe_at'],
-            'end_date' : subscribe_serializer.data['end_date']
+            'user': user_serializer.data['username'],
+            'duration': subscribe_serializer.data['duration'],
+            'start_subscribe_at': subscribe_serializer.data['start_subscribe_at'],
+            'end_date': subscribe_serializer.data['end_date']
         }
 
         # JSON 응답생성

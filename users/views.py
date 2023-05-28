@@ -150,7 +150,7 @@ def kakao_callback(request):
         # 기존에 해당 닉네임으로 가입된 유저가 없으면 새로 가입 => 새로 회원가입 & 해당 유저의 jwt 발급
         data = {'access_token': access_token, 'code': code}
         accept = requests.post(
-            f"{BASE_URL}/users/kakao/login/finish/", data=data)
+            f"{BASE_URL}users/kakao/login/finish/", data=data)
         accept_status = accept.status_code
         
 
