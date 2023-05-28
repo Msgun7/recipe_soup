@@ -19,7 +19,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.http import HttpResponseRedirect
 
-BASE_URL = 'http://127.0.0.1:8000/'
+BASE_URL = 'https://api.soeun.net/'
+FBASE_URL = 'http://127.0.0.1:5500'
 KAKAO_CALLBACK_URI = BASE_URL + 'users/kakao/callback/'
 GOOGLE_CALLBACK_URI = BASE_URL + 'users/google/callback/'
 NAVER_CALLBACK_URI = BASE_URL + 'users/naver/callback/'
@@ -79,7 +80,7 @@ def kakao_callback(request):
     error = token_req_json.get("error", None)
 
     if error is not None:
-        redirect_url = 'http://127.0.0.1:5500/index.html'
+        redirect_url = f'{FBASE_URL}/index.html'
         err_msg = "error"
         redirect_url_with_status = f'{redirect_url}?err_msg={err_msg}'
         return redirect(redirect_url_with_status)
@@ -95,7 +96,7 @@ def kakao_callback(request):
     error = profile_json.get("error")
     
     if error is not None:
-        redirect_url = 'http://127.0.0.1:5500/index.html'
+        redirect_url = f'{FBASE_URL}/index.html'
         err_msg = "failed_to_get"
         redirect_url_with_status = f'{redirect_url}?err_msg={err_msg}'
         return redirect(redirect_url_with_status)
@@ -115,13 +116,13 @@ def kakao_callback(request):
         # 기존에 가입된 유저의 Provider가 kakao가 아니면 에러 발생, 맞으면 로그인
         # # 다른 SNS로 가입된 유저
         if social_user is None:
-            redirect_url = 'http://127.0.0.1:5500/index.html'
+            redirect_url = f'{FBASE_URL}/index.html'
             status_code = 204
             redirect_url_with_status = f'{redirect_url}?status_code={status_code}'
             return redirect(redirect_url_with_status)
         
         if social_user.provider != 'kakao':
-            redirect_url = 'http://127.0.0.1:5500/index.html'
+            redirect_url = f'{FBASE_URL}/index.html'
             status_code = 400
             redirect_url_with_status = f'{redirect_url}?status_code={status_code}'
             return redirect(redirect_url_with_status)
@@ -133,14 +134,14 @@ def kakao_callback(request):
         accept_status = accept.status_code
 
         if accept_status != 200:
-            redirect_url = 'http://127.0.0.1:5500/index.html'
+            redirect_url = f'{FBASE_URL}/index.html'
             err_msg = "failed_to_signin"
             redirect_url_with_status = f'{redirect_url}?err_msg={err_msg}'
             return redirect(redirect_url_with_status)
 
         # JWT 토큰 발급 후 redirect
         jwt_token = generate_jwt_token(user)
-        response = HttpResponseRedirect("http://127.0.0.1:5500/index.html")
+        response = HttpResponseRedirect(f"{FBASE_URL}/index.html")
         response.set_cookie('jwt_token', jwt_token)
         return response
 
@@ -155,12 +156,12 @@ def kakao_callback(request):
         
 
         if accept_status != 200:
-            redirect_url = 'http://127.0.0.1:5500/index.html'
+            redirect_url = f'{FBASE_URL}/index.html'
             err_msg = "kakao_signup"
             redirect_url_with_status = f'{redirect_url}?err_msg={err_msg}'
             return redirect(redirect_url_with_status)
 
-        redirect_url = 'http://127.0.0.1:5500/index.html'
+        redirect_url = f'{FBASE_URL}/index.html'
         status_code = 201
         redirect_url_with_status = f'{redirect_url}?status_code={status_code}'
         return redirect(redirect_url_with_status)
@@ -195,7 +196,7 @@ def google_callback(request):
 
     # 1-2. 에러 발생 시 종료
     if error is not None:
-        redirect_url = 'http://127.0.0.1:5500/index.html'
+        redirect_url = f'{FBASE_URL}/index.html'
         err_msg = "error"
         redirect_url_with_status = f'{redirect_url}?err_msg={err_msg}'
         return redirect(redirect_url_with_status)
@@ -210,7 +211,7 @@ def google_callback(request):
 
     # 2-1. 에러 발생
     if email_req_status != 200:
-        redirect_url = 'http://127.0.0.1:5500/index.html'
+        redirect_url = f'{FBASE_URL}/index.html'
         err_msg = "failed_to_get"
         redirect_url_with_status = f'{redirect_url}?err_msg={err_msg}'
         return redirect(redirect_url_with_status)
@@ -235,13 +236,13 @@ def google_callback(request):
 
         # 소셜 유저가 아니거나 소셜 유저이지만 구글계정이 아닐 때 에러처리
         if social_user is None:
-            redirect_url = 'http://127.0.0.1:5500/index.html'
+            redirect_url = f'{FBASE_URL}/index.html'
             status_code = 204
             redirect_url_with_status = f'{redirect_url}?status_code={status_code}'
             return redirect(redirect_url_with_status)
 
         if social_user.provider != 'google':
-            redirect_url = 'http://127.0.0.1:5500/index.html'
+            redirect_url = f'{FBASE_URL}/index.html'
             status_code = 400
             redirect_url_with_status = f'{redirect_url}?status_code={status_code}'
             return redirect(redirect_url_with_status)
@@ -254,14 +255,14 @@ def google_callback(request):
 
         # 에러가 발생하여 로그인 실패
         if accept_status != 200:
-            redirect_url = 'http://127.0.0.1:5500/index.html'
+            redirect_url = f'{FBASE_URL}/index.html'
             err_msg = "failed_to_signin"
             redirect_url_with_status = f'{redirect_url}?err_msg={err_msg}'
             return redirect(redirect_url_with_status)
 
         # JWT 토큰 발급
         jwt_token = generate_jwt_token(user)
-        response = HttpResponseRedirect("http://127.0.0.1:5500/index.html")
+        response = HttpResponseRedirect(f'{FBASE_URL}/index.html')
         response.set_cookie('jwt_token', jwt_token)
 
 
@@ -281,13 +282,13 @@ def google_callback(request):
 
         # 에러가 발생하여 회원가입 실패
         if accept_status != 200:
-            redirect_url = 'http://127.0.0.1:5500/index.html'
+            redirect_url = f'{FBASE_URL}/index.html'
             err_msg = "google_signup"
             redirect_url_with_status = f'{redirect_url}?err_msg={err_msg}'
             return redirect(redirect_url_with_status)
 
         # 회원가입 완료!
-        redirect_url = 'http://127.0.0.1:5500/index.html'
+        redirect_url = f'{FBASE_URL}/index.html'
         status_code = 201
         redirect_url_with_status = f'{redirect_url}?status_code={status_code}'
         return redirect(redirect_url_with_status)
@@ -318,7 +319,7 @@ def naver_callback(request):
 
     error = token_response_json.get("error", None)
     if error is not None:
-        redirect_url = 'http://127.0.0.1:5500/index.html'
+        redirect_url = f'{FBASE_URL}/index.html'
         err_msg = "error"
         redirect_url_with_status = f'{redirect_url}?err_msg={err_msg}'
         return redirect(redirect_url_with_status)
@@ -333,7 +334,7 @@ def naver_callback(request):
     email = profile_json.get("response").get("email")
 
     if email is None:
-        redirect_url = 'http://127.0.0.1:5500/index.html'
+        redirect_url = f'{FBASE_URL}/index.html'
         err_msg = "failed_to_get"
         redirect_url_with_status = f'{redirect_url}?err_msg={err_msg}'
         return redirect(redirect_url_with_status)
@@ -343,13 +344,13 @@ def naver_callback(request):
         social_user = SocialAccount.objects.get(user=user)
 
         if social_user is None:
-            redirect_url = 'http://127.0.0.1:5500/index.html'
+            redirect_url = f'{FBASE_URL}/index.html'
             status_code = 204
             redirect_url_with_status = f'{redirect_url}?status_code={status_code}'
             return redirect(redirect_url_with_status)
 
         if social_user.provider != 'naver':
-            redirect_url = 'http://127.0.0.1:5500/index.html'
+            redirect_url = f'{FBASE_URL}/index.html'
             status_code = 400
             redirect_url_with_status = f'{redirect_url}?status_code={status_code}'
             return redirect(redirect_url_with_status)
@@ -360,13 +361,13 @@ def naver_callback(request):
         accept_status = accept.status_code
 
         if accept_status != 200:
-            redirect_url = 'http://127.0.0.1:5500/index.html'
+            redirect_url = f'{FBASE_URL}/index.html'
             err_msg = "failed_to_signin"
             redirect_url_with_status = f'{redirect_url}?err_msg={err_msg}'
             return redirect(redirect_url_with_status)
 
         jwt_token = generate_jwt_token(user)
-        response = HttpResponseRedirect("http://127.0.0.1:5500/index.html")
+        response = HttpResponseRedirect(f'{FBASE_URL}/index.html')
         response.set_cookie('jwt_token', jwt_token)
         return response
 
@@ -377,12 +378,12 @@ def naver_callback(request):
         accept_status = accept.status_code
 
         if accept_status != 200:
-            redirect_url = 'http://127.0.0.1:5500/index.html'
+            redirect_url = f'{FBASE_URL}/index.html'
             err_msg = "naver_signup"
             redirect_url_with_status = f'{redirect_url}?err_msg={err_msg}'
             return redirect(redirect_url_with_status)
 
-        redirect_url = 'http://127.0.0.1:5500/index.html'
+        redirect_url = f'{FBASE_URL}/index.html'
         status_code = 201
         redirect_url_with_status = f'{redirect_url}?status_code={status_code}'
         return redirect(redirect_url_with_status)
@@ -414,7 +415,7 @@ def github_callback(request):
     error = token_req_json.get("error")
 
     if error is not None:
-        redirect_url = 'http://127.0.0.1:5500/index.html'
+        redirect_url = f'{FBASE_URL}/index.html'
         err_msg = "error"
         redirect_url_with_status = f'{redirect_url}?err_msg={err_msg}'
         return redirect(redirect_url_with_status)
@@ -427,7 +428,7 @@ def github_callback(request):
     error = user_json.get("error")
 
     if error is not None:
-        redirect_url = 'http://127.0.0.1:5500/index.html'
+        redirect_url = f'{FBASE_URL}/index.html'
         err_msg = "error"
         redirect_url_with_status = f'{redirect_url}?err_msg={err_msg}'
         return redirect(redirect_url_with_status)
@@ -439,13 +440,13 @@ def github_callback(request):
         user = social_user.user
 
         if social_user is None:
-            redirect_url = 'http://127.0.0.1:5500/index.html'
+            redirect_url = f'{FBASE_URL}/index.html'
             status_code = 204
             redirect_url_with_status = f'{redirect_url}?status_code={status_code}'
             return redirect(redirect_url_with_status)
 
         if social_user.provider != 'github':
-            redirect_url = 'http://127.0.0.1:5500/index.html'
+            redirect_url = f'{FBASE_URL}/index.html'
             status_code = 400
             redirect_url_with_status = f'{redirect_url}?status_code={status_code}'
             return redirect(redirect_url_with_status)
@@ -456,14 +457,14 @@ def github_callback(request):
         accept_status = accept.status_code
 
         if accept_status != 200:
-            redirect_url = 'http://127.0.0.1:5500/index.html'
+            redirect_url = f'{FBASE_URL}/index.html'
             err_msg = "failed_to_signin"
             redirect_url_with_status = f'{redirect_url}?err_msg={err_msg}'
             return redirect(redirect_url_with_status)
 
         # JWT 토큰 발급
         jwt_token = generate_jwt_token(user)
-        response = HttpResponseRedirect("http://127.0.0.1:5500/index.html")
+        response = HttpResponseRedirect(f'{FBASE_URL}/index.htm')
         response.set_cookie('jwt_token', jwt_token)
         return response
 
@@ -479,18 +480,18 @@ def github_callback(request):
 
         if before_count == after_count:
             if accept_status != 200:
-                redirect_url = 'http://127.0.0.1:5500/index.html'
+                redirect_url = f'{FBASE_URL}0/index.html'
                 err_msg = "github_signup"
                 redirect_url_with_status = f'{redirect_url}?err_msg={err_msg}'
                 return redirect(redirect_url_with_status)
 
 
         if accept_status == 400:
-            redirect_url = 'http://127.0.0.1:5500/index.html'
+            redirect_url = f'{FBASE_URL}/index.html'
             err_msg = "github_signup"
             redirect_url_with_status = f'{redirect_url}?err_msg={err_msg}'
  
-        redirect_url = 'http://127.0.0.1:5500/index.html'
+        redirect_url = f'{FBASE_URL}/index.html'
         status_code = 201
         redirect_url_with_status = f'{redirect_url}?status_code={status_code}'
         return redirect(redirect_url_with_status)
