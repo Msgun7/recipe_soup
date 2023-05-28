@@ -480,7 +480,7 @@ def github_callback(request):
 
         if before_count == after_count:
             if accept_status != 200:
-                redirect_url = f'{FBASE_URL}0/index.html'
+                redirect_url = f'{FBASE_URL}/index.html'
                 err_msg = "github_signup"
                 redirect_url_with_status = f'{redirect_url}?err_msg={err_msg}'
                 return redirect(redirect_url_with_status)
