@@ -20,7 +20,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from django.http import HttpResponseRedirect
 
 BASE_URL = 'https://api.soeun.net/'
-FBASE_URL = 'http://127.0.0.1:5500'
+FBASE_URL = 'https://soeun.net'
 KAKAO_CALLBACK_URI = BASE_URL + 'users/kakao/callback/'
 GOOGLE_CALLBACK_URI = BASE_URL + 'users/google/callback/'
 NAVER_CALLBACK_URI = BASE_URL + 'users/naver/callback/'
