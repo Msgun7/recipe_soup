@@ -6,16 +6,16 @@
 
 # 프로젝트 정보
 ### 1. 프로젝트 기간
->#### 23.05.23 ~ 23.05.28
+>#### 23.05.22 ~ 23.05.28
 
 ### 2. 참여 인원
 
 |GitHub|이름|역할|
 |------|---|---|
 |@Msgun7|연제건(팀장)|카카오 로그인|
-|@kmy9810|김미영|front, back - CRUD, Pagination, 알림, |
+|@kmy9810|김미영|front, back - CRUD, Pagination, 알림, AI|
 |@yell2023|양예린|깃허브/네이버/구글 로그인|
-|@misily|김은수|AI|
+|@misily|김은수|AI기초|
 |@Soeun-Jang|장소은|Tosspay 결제, 배포, 발표|
 
 
@@ -38,8 +38,9 @@ https://ovenapp.io/view/HPM0LYdqgz03Bru7Zal5xGz9GN8us7QH/DtjJh
 
 # 5. ERD
 
-
-
+<p align="center">
+  <img src="https://github.com/Msgun7/recipe_soup/assets/107108586/c4eb0745-63ea-497d-97f7-0a777e1f29b8">
+</p>
 
 # 6. 버전
 파이썬 Python 3.10.6
